@@ -1,0 +1,38 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: alice-platform
+  title: Alice Johnson
+  description: Senior Platform Engineer specializing in developer tooling
+spec:
+  profile:
+    displayName: Alice Johnson
+    email: alice@company.com
+    picture: https://avatars.dicebear.com/api/identicon/alice.svg
+  memberOf: [platform-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: bob-platform
+  title: Bob Williams
+  description: Platform Engineer focused on infrastructure automation
+spec:
+  profile:
+    displayName: Bob Williams
+    email: bob.williams@company.com
+    picture: https://avatars.dicebear.com/api/identicon/bob.svg
+  memberOf: [platform-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: carol-frontend
+  title: Carol Davis
+  description: Senior Frontend Developer and React specialist
+spec:
+  profile:
+    displayName: Carol Davis
+    email: carol@company.com
+    picture: https://avatars.dicebear.com/api/identicon/carol.svg
+  memberOf: [frontend-team]

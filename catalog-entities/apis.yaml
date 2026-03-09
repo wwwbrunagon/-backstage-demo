@@ -1,0 +1,108 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: user-auth-api
+  title: User Authentication API
+  description: REST API for user authentication, authorization, and profile management
+  tags:
+    - rest
+    - authentication
+    - oauth2
+spec:
+  type: openapi
+  lifecycle: production
+  owner: platform-team
+  system: identity-system
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: User Authentication API
+      version: 1.0.0
+      description: Handles user login, logout, token management, and profile management
+    paths:
+      /auth/login:
+        post:
+          summary: Authenticate user credentials
+          description: Validates username/password and returns JWT token
+      /auth/logout:
+        post:
+          summary: Invalidate user session
+      /auth/profile:
+        get:
+          summary: Get current user profile information
+      /auth/refresh:
+        post:
+          summary: Refresh expired authentication token
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: customer-data-api
+  title: Customer Data API
+  description: REST API for customer profile management and data operations
+  tags:
+    - rest
+    - customer-data
+    - crud
+spec:
+  type: openapi
+  lifecycle: production
+  owner: frontend-team
+  system: customer-experience
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Customer Data API
+      version: 2.1.0
+      description: CRUD operations for customer profiles, preferences, and accounts
+    paths:
+      /customers/{id}:
+        get:
+          summary: Retrieve customer profile by ID
+        put:
+          summary: Update customer profile information
+        delete:
+          summary: Delete customer account
+      /customers/{id}/preferences:
+        get:
+          summary: Get customer preferences and settings
+        post:
+          summary: Update customer preference
+      /customers/{id}/orders:
+        get:
+          summary: List customer order history
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: config-management-api
+  title: Configuration Management API
+  description: Internal API for application configuration and feature flag management
+  tags:
+    - rest
+    - configuration
+    - internal
+spec:
+  type: openapi
+  lifecycle: production
+  owner: bob-platform
+  system: api-infrastructure
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Configuration Management API
+      version: 1.0.0
+      description: Centralized configuration management for all applications
+    paths:
+      /config/{app-name}:
+        get:
+          summary: Get configuration for specific application
+          description: Returns environment-specific config values
+      /config/{app-name}/features:
+        get:
+          summary: Get feature flags for application
+        post:
+          summary: Update feature flag states
+      /health:
+        get:
+          summary: Health check endpoint for monitoring

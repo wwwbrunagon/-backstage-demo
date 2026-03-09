@@ -1,0 +1,133 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: user-auth-service
+  title: User Authentication Service
+  description: Centralized authentication and authorization service using OAu
+  tags:
+    - platform
+    - authentication
+    - microservice
+  annotations:
+    github.com/project-slug: company/user-auth-service
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: identity-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-gateway
+  title: API Gateway Service
+  description: Central entry point for all API traffic with rate limiting
+  tags:
+    - platform
+    - gateway
+    - infrastructure
+  annotations:
+    github.com/project-slug: company/api-gateway
+spec:
+  type: service
+  lifecycle: production
+  owner: alice-platform
+  system: api-infrastructure
+  dependsOn:
+    - component:user-auth-service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: config-service
+  title: Configuration Management Service
+  description: Centralized configuration management for all applications
+  tags:
+    - platform
+    - configuration
+    - infrastructure
+  annotations:
+    github.com/project-slug: company/config-service
+spec:
+  type: service
+  lifecycle: production
+  owner: bob-platform
+  system: api-infrastructure
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: customer-portal
+  title: Customer Portal Web Application
+  description: Main customer-facing web application built with React
+  tags:
+    - frontend
+    - react
+    - customer-facing
+  annotations:
+    github.com/project-slug: company/customer-portal
+spec:
+  type: website
+  lifecycle: production
+  owner: frontend-team
+  system: customer-experience
+  dependsOn:
+    - component:api-gateway
+    - component:user-auth-service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: admin-dashboard
+  title: Administrative Dashboard
+  description: Internal dashboard for customer support and operations teams
+  tags:
+    - frontend
+    - admin
+    - dashboard
+  annotations:
+    github.com/project-slug: company/admin-dashboard
+spec:
+  type: website
+  lifecycle: production
+  owner: carol-frontend
+  system: admin-tools
+  dependsOn:
+    - component:api-gateway
+    - component:user-auth-service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: shared-ui-components
+  title: Shared UI Component Library
+  description: Reusable React components and design system for consistent UI
+  tags:
+    - library
+    - react
+    - design-system
+  annotations:
+    github.com/project-slug: company/ui-components
+spec:
+  type: library
+  lifecycle: production
+  owner: david-frontend
+  system: design-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-client-sdk
+  title: API Client SDK
+  description: TypeScript SDK for easy integration with company APIs
+  tags:
+    - library
+    - sdk
+    - typescript
+  annotations:
+    github.com/project-slug: company/api-client-sdk
+spec:
+  type: library
+  lifecycle: production
+  owner: emma-techlead
+  system: developer-tools

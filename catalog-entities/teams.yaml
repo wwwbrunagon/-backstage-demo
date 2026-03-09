@@ -1,0 +1,43 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+  title: Platform Engineering Team
+  description: Team responsible for developer experience and infrastructure
+  tags:
+    - platform
+    - infrastructure
+spec:
+  type: team
+  profile:
+    displayName: Platform Team
+    email: platform@company.com
+    picture: https://avatars.dicebear.com/api/identicon/platform-team.svg
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+  - frontend
+  - web
+spec:
+  type: team
+  profile:
+    displayName: Frontend Team
+    email: frontend@company.com
+    picture: https://avatars.dicebear.com/api/identicon/frontend-team.svg
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: engineering-org
+  title: Engineering Organization
+  description: All engineering teams and departments
+  tags:
+    - engineering
+    - organization
+spec:
+  type: organization
+  profile:
+    displayName: Engineering
+    email: engineering@company.com
+  children: [platform-team, frontend-team]
