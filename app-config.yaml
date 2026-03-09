@@ -71,8 +71,8 @@ auth:
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
-kubernetes:
-  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+kubernetes: null
+# see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
 
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:
@@ -83,8 +83,36 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location, Group, User]
+    - allow:
+        - Component
+        - System
+        - API
+        - Resource
+        - Location
+        - Template
+        - User
+        - Group
   locations:
+    - type: file
+      target: ../../examples/entities.yaml
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow:
+            - Template
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow:
+            - User
+            - Group
+    - type: file
+      target: ../../template/template.yaml
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow:
+            - Template
     - type: file
       target: ../../catalog-entities/teams.yaml
     - type: file
@@ -92,4 +120,4 @@ catalog:
     - type: file
       target: ../../catalog-entities/components.yaml
     - type: file
-      target: ../../catalog-entities/apis .yaml
+      target: ../../catalog-entities/apis.yaml

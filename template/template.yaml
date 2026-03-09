@@ -1,0 +1,124 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nodejs-service-template
+  title: Node.js Microservice Template
+  description: |
+    Creates a production-ready Node.js microservice with Express, testing, and Docker
+
+    ## What this template creates
+
+    - **Express.js API** with TypeScript for type safety
+    - **Testing setup** with Jest and Supertest
+    - **Docker configuration** for containerized deployment
+    - **GitHub Actions** CI/CD pipeline
+    - **OpenAPI documentation** with Swagger UI
+    - **Health check endpoints** for monitoring
+    - **ESLint and Prettier** for code quality
+
+  tags:
+    - nodejs
+    - microservice
+    - express
+    - rest-api
+    - docker
+    - typescript
+    - recommended
+    - backend
+    - api
+
+  links:
+    - url: https://expressjs.com/
+      title: Express.js Documentation
+      icon: web
+    - url: https://github.com/your-org/nodejs-examples
+      title: Example Services
+      icon: github
+
+spec:
+  owner: platform-team
+  type: service
+  lifecycle: experimental
+  system: developer-tools
+
+# User input form definition
+parameters:
+  - title: Project Information
+    required:
+      - name
+      - description
+      - owner
+    properties:
+      name:
+        title: Service Name
+        type: string
+        description: Name of your new microservice (will be used for repository and service)
+        pattern: '^[a-z0-9-]+$'
+        minLength: 3
+        maxLength: 50
+        ui:autofocus: true
+        ui:help: 'Use lowercase letters, numbers, and hyphens only. Example: user-auth'
+        ui:placeholder: 'my-awesome-service'
+
+      description:
+        title: Service Description
+        type: string
+        description: Brief description of what this service does
+        minLength: 10
+        maxLength: 200
+        ui:widget: textarea
+        ui:options:
+          rows: 3
+        ui:help: 'This will appear in README files and service documentation'
+        ui:placeholder: 'This service handles user authentication and session management'
+
+      owner:
+        title: GitHub Owner
+        type: string
+        description: GitHub username or organization for the repository
+        ui:help: 'The GitHub user or org that will own the new repository'
+
+    repository_name:
+      title: Repository Name
+      type: string
+      description: GitHub repository name (usually same as service name)
+      pattern: '^[a-z0-9-]+$'
+      ui:help: 'Combined with GitHub Owner above to create: github.com/[owner]/[repo]'
+
+    enable_cicd:
+      title: Enable CI/CD Pipeline
+      type: boolean
+      description: Include GitHub Actions workflow for automated testing and deployment
+      default: true
+      ui:help: 'Recommended for all services. Creates automated testing on every commit'
+
+    database_type:
+      title: Database Integration
+      type: string
+      description: Which database will this service use
+      enum:
+        - none
+        - postgresql
+        - mysql
+        - mongodb
+      enumNames:
+        - No Database
+        - PostgreSQL
+        - MySQL
+        - MongoDB
+      default: postgresql
+      ui:help: 'PostgreSQL is recommended for most applications. Choose "none" for stateless services'
+
+steps:
+  - id: fetch-template
+    name: Fetch Base Template
+    action: fetch:template
+    input:
+      url: ./content
+      values:
+        name: ${{ parameters.name }}
+        description: ${{ parameters.description }}
+        owner: ${{ parameters.owner }}
+        repository_name: ${{ parameters.repository_name }}
+        enable_cicd: ${{ parameters.enable_cicd }}
+        database_type: ${{ parameters.database_type }}
